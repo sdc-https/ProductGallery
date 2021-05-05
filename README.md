@@ -1,13 +1,12 @@
-# Project Name
+# Amazon Product Page Gallery
 
 > Project description
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/Zheng-Yi-Sao/ProductInformation
+  - https://github.com/Zheng-Yi-Sao/ProductOverview
+  - https://github.com/Zheng-Yi-Sao/CustomerReviews
 
 ## Table of Contents
 
@@ -37,3 +36,9 @@ npm install -g webpack
 npm install
 ```
 
+### Seeding DB
+
+From within the root directory:
+```sh
+npm run db-seed
+```
