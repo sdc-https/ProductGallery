@@ -1,0 +1,56 @@
+.container {
+	width: 80vw;
+	margin: auto;
+	min-width: 1024px;
+	outline: 1px solid;
+	display: flex;
+	flex-flow: row;
+}
+
+.overview {
+	padding-left: 8px;
+}
+
+.left-col {
+	width: 25%;
+}
+
+.imageBlock {
+  display: flex;
+  flex-flow: column;
+}
+
+.imageBlock img {
+	max-width: 100%;
+	height: auto;
+	align-self: center;
+}
+
+.imageBlock .imageCaption {
+	text-align: center;
+	color: #666;
+}
+
+.imageBlock ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+}
+
+.imageBlock ul li {
+	width: 40px;
+	margin: 4px;
+	display: flex;
+	cursor: pointer;
+	border: 1px solid #666;
+	padding: 1px;
+	border-radius: 2px;
+}
+
+.imageBlock ul li.selected {
+	border-color: #e77600;
+	box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%)
+}
