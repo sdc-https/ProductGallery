@@ -2,17 +2,26 @@
 import React from 'react';
 
 class Gallery extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      selected: 0
+    };
+  }
+
   render() {
     return (
       <div class="imageBlock">
-        <img src="https://placeimg.com/360/480/tech" />
-        <div class="imageCaption">
+        <img src={this.props.images[this.state.selected]} />
+        <div className="imageCaption">
           Click image to open expanded view
         </div>
         <ul class="altImages">
-          <li class="selected"><img src="https://placeimg.com/360/480/tech" /></li>
-          <li><img src="https://placeimg.com/360/480/animals" /></li>
-          <li><img src="https://placeimg.com/480/360/arch" /></li>
+          {this.props.images.map((image, index) => (
+            <li className={this.state.selected === index && 'selected'}><img src={image} /></li>
+          )
+          )}
         </ul>
       </div>
     );

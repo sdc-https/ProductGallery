@@ -6,7 +6,8 @@ const config = {
   entry: './client/src/index.js',
   output: {
     path: path.resolve(__dirname, './client/dist'),
-    filename: 'gallery.js'
+    filename: 'gallery.js',
+    publicPath: '/'
   },
   module: {
     rules: [

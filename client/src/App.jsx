@@ -1,11 +1,25 @@
 
 import React from 'react';
 import Gallery from './components/gallery.jsx';
-
+import axios from 'axios';
 class App extends React.Component {
+  constructor (props) {
+    super(props);
+    let productId = new URL(window.location).pathname.split('/dp/')[1];
+    this.state = {
+      productId,
+      images: []
+    };
+  }
+  componentDidMount() {
+    axios.get('/images/' + this.state.productId)
+      .then(res => this.setState(res.data))
+      .catch(console.error);
+  }
+
   render() {
     return (
-      <Gallery />
+      <Gallery images={this.state.images} />
     );
   }
 }
