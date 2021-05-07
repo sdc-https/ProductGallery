@@ -12,14 +12,14 @@ class Gallery extends React.Component {
 
   render() {
     return (
-      <div class="imageBlock">
+      <div className="imageBlock">
         <img src={this.props.images[this.state.selected]} />
         <div className="imageCaption">
           Click image to open expanded view
         </div>
-        <ul class="altImages">
+        <ul className="altImages">
           {this.props.images.map((image, index) => (
-            <li className={this.state.selected === index && 'selected'}><img src={image} /></li>
+            <li key={index} className={this.state.selected === index ? 'selected' : ''}><img src={image} /></li>
           )
           )}
         </ul>

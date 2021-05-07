@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
 });
 
 const sendIndex = (req, res) => {
-  console.log('sent');
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 };
 
@@ -21,20 +20,15 @@ app.get('/dp/:productId', sendIndex);
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
   db.models.ProductImages.findOne({productId}, (err, product) => {
-    if (err) {
-      res.sendStatus(404); //wrong code but whatever
+    if (product !== null) {
+      res.json(product);
     } else {
-      if (product !== null) {
-        res.json(product);
-      } else {
-        res
-          .status(404)
-          .json({
-            productId,
-            images: [],
-          });
-      }
-
+      res
+        .status(404)
+        .json({
+          productId,
+          images: [],
+        });
     }
   });
   //res.json({productId});
