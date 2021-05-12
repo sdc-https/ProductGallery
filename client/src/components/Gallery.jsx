@@ -15,7 +15,6 @@ class Gallery extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="imageBlock">
         <img src={this.props.images[this.state.selected]} />

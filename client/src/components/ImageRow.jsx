@@ -2,9 +2,6 @@
 import React from 'react';
 
 class ImageRow extends React.Component {
-  constructor (props) {
-    super(props);
-  }
 
   render() {
     return (
