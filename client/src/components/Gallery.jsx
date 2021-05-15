@@ -1,19 +1,27 @@
 
 import React from 'react';
-
+import ImageRow from './ImageRow.jsx';
 class Gallery extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      selected: 0
+    };
+  }
+
+  mouseHandler(index) {
+    this.setState({selected: +index.currentTarget.dataset.index});
+  }
+
   render() {
     return (
-      <div class="imageBlock">
-        <img src="https://placeimg.com/360/480/tech" />
-        <div class="imageCaption">
+      <div className="imageBlock">
+        <img src={this.props.images[this.state.selected]} />
+        <div className="imageCaption">
           Click image to open expanded view
         </div>
-        <ul class="altImages">
-          <li class="selected"><img src="https://placeimg.com/360/480/tech" /></li>
-          <li><img src="https://placeimg.com/360/480/animals" /></li>
-          <li><img src="https://placeimg.com/480/360/arch" /></li>
-        </ul>
+        <ImageRow images={this.props.images} mouseHandler={(e) => this.mouseHandler(e)} selected={this.state.selected}/>
       </div>
     );
   }
