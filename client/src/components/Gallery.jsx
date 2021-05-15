@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import ImageRow from './ImageRow.jsx';
 class Gallery extends React.Component {
 
   constructor (props) {
@@ -10,6 +10,10 @@ class Gallery extends React.Component {
     };
   }
 
+  mouseHandler(index) {
+    this.setState({selected: +index.currentTarget.dataset.index});
+  }
+
   render() {
     return (
       <div className="imageBlock">
@@ -17,12 +21,7 @@ class Gallery extends React.Component {
         <div className="imageCaption">
           Click image to open expanded view
         </div>
-        <ul className="altImages">
-          {this.props.images.map((image, index) => (
-            <li key={index} className={this.state.selected === index ? 'selected' : ''}><img src={image} /></li>
-          )
-          )}
-        </ul>
+        <ImageRow images={this.props.images} mouseHandler={(e) => this.mouseHandler(e)} selected={this.state.selected}/>
       </div>
     );
   }

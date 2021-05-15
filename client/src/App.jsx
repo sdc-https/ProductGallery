@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Gallery from './components/gallery.jsx';
+import Gallery from './components/Gallery.jsx';
 import axios from 'axios';
 class App extends React.Component {
   constructor (props) {
