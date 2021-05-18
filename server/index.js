@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-const port = 1166;
+const cors = require('cors');
 const db = require('../database/index.js');
 const path = require('path');
+const port = 1166;
 
 app.use(express.static(path.join(__dirname, '/../client/dist'), {index: false}));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.redirect('./dp/1');
