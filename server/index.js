@@ -5,17 +5,14 @@ const db = require('../database/index.js');
 const path = require('path');
 const port = 1166;
 
-app.use(express.static(path.join(__dirname, '/../client/dist'), {index: false}));
+app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
-
-app.get('/', (req, res) => {
-  res.redirect('./dp/1');
-});
 
 const sendIndex = (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 };
 
+app.get('/:dp', sendIndex);
 app.get('/:productName/dp/:productId', sendIndex);
 app.get('/dp/:productId', sendIndex);
 
