@@ -5,7 +5,7 @@ import axios from 'axios';
 class App extends React.Component {
   constructor (props) {
     super(props);
-    let productId = new URL(window.location).pathname.split('/dp/')[1];
+    let productId = new URL(window.location).pathname.split('/').pop() || 1;
     this.state = {
       productId,
       images: []
