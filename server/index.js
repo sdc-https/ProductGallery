@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const db = require('../database/index.js');
 const path = require('path');
-const port = 3001;
+const port = 1166;
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
@@ -13,7 +13,8 @@ const sendIndex = (req, res) => {
 };
 
 app.get('/:dp', sendIndex);
-app.get('*/dp/:productId', sendIndex);
+app.get('/:productName/dp/:productId', sendIndex);
+app.get('/dp/:productId', sendIndex);
 
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
