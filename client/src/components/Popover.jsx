@@ -29,13 +29,13 @@ class Popover extends React.Component {
     return (
       this.props.visible && <div className="overlay">
         <div className="popoverGallery">
-          <div onClick={this.props.closeHandler} class="popoverClose">x</div>
+          <div onClick={this.props.closeHandler} className="popoverClose">x</div>
           <div className="largeImage">
             <img src={this.props.images[this.state.selected]} />
           </div>
           <div className="imageColumn">
             {imageRows.map((images, offset) =>
-              <ImageRow images={images} offset={offset * 4} mouseHandler={(e) => this.mouseHandler(e)} selected={this.state.selected}/>
+              <ImageRow images={images} key={offset} offset={offset * 4} mouseHandler={() => {}} clickHandler={(e) => this.mouseHandler(e)} selected={this.state.selected}/>
             )}
           </div>
         </div>

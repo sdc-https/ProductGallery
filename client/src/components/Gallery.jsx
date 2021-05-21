@@ -21,7 +21,7 @@ class Gallery extends React.Component {
         <div className="imageCaption">
           Click image to open expanded view
         </div>
-        <ImageRow images={this.props.images} mouseHandler={(e) => this.mouseHandler(e)} selected={this.state.selected}/>
+        <ImageRow images={this.props.images} mouseHandler={(e) => this.mouseHandler(e)} clickHandler={() => {}} selected={this.state.selected}/>
       </div>
     );
   }

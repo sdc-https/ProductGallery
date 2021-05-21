@@ -8,7 +8,7 @@ class ImageRow extends React.Component {
     return (
       <ul className="imageRow">
         {this.props.images.map((image, index) => (
-          index < 4 && <li onClick={(e) => this.props.mouseHandler(e)} data-index={index + offset} key={index + offset} className={this.props.selected === (index + offset) ? 'selected' : ''}><img src={image} /></li>
+          index < 4 && <li onMouseEnter={this.props.mouseHandler} onClick={this.props.clickHandler} data-index={index + offset} key={index + offset} className={this.props.selected === (index + offset) ? 'selected' : ''}><img src={image} /></li>
         )
         )}
       </ul>
