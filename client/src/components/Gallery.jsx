@@ -17,7 +17,7 @@ class Gallery extends React.Component {
   render() {
     return (
       <div className="imageBlock">
-        <img src={this.props.images[this.state.selected]} />
+        <img src={this.props.images[this.state.selected]} onClick={this.props.openHandler} />
         <div className="imageCaption">
           Click image to open expanded view
         </div>

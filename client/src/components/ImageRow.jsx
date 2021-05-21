@@ -4,10 +4,11 @@ import React from 'react';
 class ImageRow extends React.Component {
 
   render() {
+    let offset = this.props.offset || 0;
     return (
       <ul className="imageRow">
         {this.props.images.map((image, index) => (
-          <li onMouseOver={(e) => this.props.mouseHandler(e)} data-index={index} key={index} className={this.props.selected === index ? 'selected' : ''}><img src={image} /></li>
+          index < 4 && <li onClick={(e) => this.props.mouseHandler(e)} data-index={index + offset} key={index + offset} className={this.props.selected === (index + offset) ? 'selected' : ''}><img src={image} /></li>
         )
         )}
       </ul>
