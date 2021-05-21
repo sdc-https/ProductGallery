@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const db = require('../database/index.js');
 const path = require('path');
-const port = 1166;
+const port = 3003;
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
