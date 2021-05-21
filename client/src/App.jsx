@@ -12,7 +12,7 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get('/images/' + this.state.productId)
+    axios.get('http://localhost:1166/images/' + this.state.productId)
       .then(res => this.setState(res.data))
       .catch(console.error);
   }
