@@ -12,8 +12,7 @@ const generateImages = (size = 0, id = 0) => {
     const width = sizes[Math.round(Math.random() * (sizes.length - 1))];
     const height = sizes[Math.round(Math.random() * (sizes.length - 1))];
     const tagIndex = Math.round(Math.random() * (tags.length - 1));
-    const lockIndex = Math.floor(Math.random() * 1000);
-    images.push(url + width + '/' + height + '/' + tags[tagIndex] + '?lock=' + lockIndex);
+    images.push(url + width + '/' + height + '/' + tags[tagIndex] + '?lock=' + id);
     tags.splice(tagIndex, 1);
   }
   return images;
