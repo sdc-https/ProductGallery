@@ -10,7 +10,8 @@ class App extends React.Component {
     this.state = {
       productId,
       images: [],
-      overlayIsVisible: false
+      overlayIsVisible: false,
+      productName: ''
     };
   }
 
@@ -18,13 +19,17 @@ class App extends React.Component {
     axios.get('http://localhost:3003/images/' + this.state.productId)
       .then(res => this.setState(res.data))
       .catch(console.error);
+
+    axios.get('http://localhost:3002/overview/' + this.state.productId)
+      .then(res => this.setState({productName: res.data.product_name}))
+      .catch(console.error);
   }
 
   render() {
     return (
       <>
         <Gallery images={this.state.images} openHandler = {() => this.setState({overlayIsVisible: true})} />
-        <Popover images={this.state.images} closeHandler = {() => this.setState({overlayIsVisible: false})} visible={this.state.overlayIsVisible} ></Popover>
+        <Popover images={this.state.images} closeHandler = {() => this.setState({overlayIsVisible: false})} visible={this.state.overlayIsVisible} name={this.state.productName}></Popover>
       </>
 
     );
