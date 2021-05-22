@@ -18,8 +18,10 @@
 	position: sticky;
 }
 
-#Gallery .imageBlock img {
+#Gallery .imageBlock > img {
+	height: 370px;
 	cursor: pointer;
+	object-fit: contain;
 }
 
 #Gallery img {
@@ -145,14 +147,28 @@
 }
 
 #Gallery .popoverClose {
+	all: unset;
 	cursor: pointer;
 	color: #666;
 	position: absolute;
   right: 0;
   top: 0;
-  padding: inherit;
+	font-family: sans-serif;
+	font-size: 24px;
+	width: 28px;
+	height: 28px;
+	margin: 4px;
+	text-align: center;
+	border-radius: 3px;
 }
 
 #Gallery .popoverClose:hover {
 	color: #333;
+}
+
+#Gallery .popoverClose:focus {
+	background-color: transparent;
+	border-color: #e77600;
+	box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%);
+	outline: 0;
 }
