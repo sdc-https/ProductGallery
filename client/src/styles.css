@@ -7,6 +7,7 @@
 }
 
 #Gallery {
+	user-select: none;
 	height: 100%;
 }
 
@@ -17,7 +18,11 @@
 	position: sticky;
 }
 
-.imageBlock img {
+#Gallery .imageBlock img {
+	cursor: pointer;
+}
+
+#Gallery img {
 	all: revert;
 	max-width: 100%;
 	height: auto;
@@ -30,7 +35,7 @@
 	color: #666;
 }
 
-.imageBlock ul {
+#Gallery ul {
 	all: revert;
 	list-style: none;
 	padding: 0;
@@ -40,7 +45,7 @@
 	justify-content: center;
 }
 
-.imageBlock ul li {
+#Gallery ul.imageRow li {
 	width: 40px;
 	margin: 4px;
 	display: flex;
@@ -50,7 +55,103 @@
 	border-radius: 2px;
 }
 
-.imageBlock ul li.selected {
+#Gallery ul.imageRow li.selected {
 	border-color: #e77600;
 	box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%)
+}
+
+
+.overlay {
+	position: fixed;
+	display:flex;
+	left: 0;
+	top: 0;
+	width:100vw;
+	height:100vh;
+	background: #0F111199;
+}
+
+.popoverGallery {
+	width: calc(100% - 7.5vw);
+  height: calc(100% - 25vh);
+	max-width: 1980px;
+	margin: auto;
+	position: relative;
+	box-shadow: 0 0 14px 0 #3339;
+	background: white;
+	border-radius:8px;
+	padding: 16px 24px;
+	display: flex;
+}
+
+#Gallery .largeImage {
+	justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+#Gallery .largeImage img {
+	max-height: 100%;
+}
+
+.largeImage.zoomable {
+	cursor: zoom-in
+}
+
+.largeImage.zoomable.zoomed {
+	cursor: zoom-out;
+}
+.largeImage img {
+	all: revert;
+	contain: content;
+	margin-top:0;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.largeImage.zoomed img {
+	max-height: unset;
+	max-width: unset;
+}
+
+.imageColumn {
+  width: 280px;
+  height: 100%;
+}
+
+#Gallery div.imageColumn ul.imageRow {
+	justify-content: flex-start;
+}
+
+#Gallery div.imageColumn ul.imageRow li {
+	width: 40px;
+	margin: 4px;
+	display: flex;
+	cursor: pointer;
+	border: 2px solid #D5DBDB;
+	padding: 1px;
+	border-radius: 2px;
+}
+
+#Gallery div.imageColumn ul.imageRow li:hover {
+	border: 2px solid #004B91;
+}
+
+#Gallery div.imageColumn ul.imageRow li.selected {
+	border: 2px solid #FF8F00;
+}
+
+#Gallery .popoverClose {
+	cursor: pointer;
+	color: #666;
+	position: absolute;
+  right: 0;
+  top: 0;
+  padding: inherit;
+}
+
+#Gallery .popoverClose:hover {
+	color: #333;
 }
