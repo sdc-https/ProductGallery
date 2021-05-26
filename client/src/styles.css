@@ -123,6 +123,7 @@
 #Gallery .imageColumn {
   width: 280px;
   height: 100%;
+	padding-left: 24px;
 }
 
 #Gallery .imageColumn .imageColumnTitle {
