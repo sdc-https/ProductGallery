@@ -11,7 +11,7 @@
 	height: 100%;
 }
 
-.imageBlock {
+#Gallery .imageBlock {
   display: flex;
   flex-flow: column;
 	top: 0;
@@ -32,7 +32,7 @@
 	max-height: 370px;
 }
 
-.imageBlock .imageCaption {
+#Gallery .imageBlock .imageCaption {
 	text-align: center;
 	color: #666;
 }
@@ -63,7 +63,7 @@
 }
 
 
-.overlay {
+#Gallery .overlay {
 	position: fixed;
 	display:flex;
 	left: 0;
@@ -74,7 +74,7 @@
 	z-index: 100;
 }
 
-.popoverGallery {
+#Gallery .popoverGallery {
 	width: calc(100% - 7.5vw);
   height: calc(100% - 25vh);
 	max-width: 1980px;
@@ -99,14 +99,15 @@
 	max-height: 100%;
 }
 
-.largeImage.zoomable {
+#Gallery .largeImage.zoomable {
 	cursor: zoom-in
 }
 
-.largeImage.zoomable.zoomed {
+#Gallery .largeImage.zoomable.zoomed {
 	cursor: zoom-out;
 }
-.largeImage img {
+
+#Gallery .largeImage img {
 	all: revert;
 	contain: content;
 	margin-top:0;
@@ -114,14 +115,22 @@
 	max-width: 100%;
 }
 
-.largeImage.zoomed img {
+#Gallery .largeImage.zoomed img {
 	max-height: unset;
 	max-width: unset;
 }
 
-.imageColumn {
+#Gallery .imageColumn {
   width: 280px;
   height: 100%;
+	padding-left: 24px;
+}
+
+#Gallery .imageColumn .imageColumnTitle {
+	margin-top: 30px;
+	margin-bottom: 15px;
+	font-size: 17px;
+	font-family: Verdana, sans-serif;
 }
 
 #Gallery div.imageColumn ul.imageRow {
