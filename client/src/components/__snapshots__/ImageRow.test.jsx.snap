@@ -9,7 +9,7 @@ exports[`renders correctly 1`] = `
     data-index={0}
   >
     <img
-      src="Image1"
+      src={0}
     />
   </li>
   <li
@@ -17,7 +17,7 @@ exports[`renders correctly 1`] = `
     data-index={1}
   >
     <img
-      src="Image2"
+      src={1}
     />
   </li>
   <li
@@ -25,8 +25,14 @@ exports[`renders correctly 1`] = `
     data-index={2}
   >
     <img
-      src="Image3"
+      src={2}
     />
   </li>
 </ul>
+`;
+
+exports[`renders if no props are passed in 1`] = `
+<ul
+  className="imageRow"
+/>
 `;
