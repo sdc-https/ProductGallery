@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<ul
+  className="imageRow"
+>
+  <li
+    className=""
+    data-index={0}
+  >
+    <img
+      src="Image1"
+    />
+  </li>
+  <li
+    className=""
+    data-index={1}
+  >
+    <img
+      src="Image2"
+    />
+  </li>
+  <li
+    className=""
+    data-index={2}
+  >
+    <img
+      src="Image3"
+    />
+  </li>
+</ul>
+`;
