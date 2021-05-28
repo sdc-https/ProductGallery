@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="overlay"
+>
+  <div
+    className="popoverGallery"
+    onMouseMove={[Function]}
+  >
+    <button
+      className="popoverClose"
+    >
+      ×
+    </button>
+    <div
+      className="largeImage"
+      onClick={[Function]}
+    >
+      <img
+        src={1}
+      />
+    </div>
+    <div
+      className="imageColumn"
+    >
+      <div
+        className="imageColumnTitle"
+      >
+        test
+      </div>
+      <ul
+        className="imageRow"
+      >
+        <li
+          className="selected"
+          data-index={0}
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          <img
+            src={1}
+          />
+        </li>
+        <li
+          className=""
+          data-index={1}
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          <img
+            src={2}
+          />
+        </li>
+        <li
+          className=""
+          data-index={2}
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          <img
+            src={3}
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
