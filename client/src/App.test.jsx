@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {cleanup, waitFor, waitForElementToBeRemoved, fireEvent, render, queryHelpers, buildQueries, screen} from '@testing-library/react';
+import {cleanup, fireEvent, render, queryHelpers, buildQueries, screen} from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
 
@@ -10,7 +10,6 @@ afterEach(() => {
 });
 
 it('renders correctly', () => {
-  const mock = jest.fn();
   const tree = renderer
     .create(<App />)
     .toJSON();
@@ -20,7 +19,7 @@ it('renders correctly', () => {
 const data = {
   productId: 1,
   images: [1, 2, 3],
-  product_name: 'test'
+  'product_name': 'test'
 };
 
 jest.mock('axios');
