@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does nothing when thumbnails are clicked 1`] = `
+<div>
+  <div
+    class="imageBlock"
+  >
+    <img
+      src="1"
+    />
+    <div
+      class="imageCaption"
+    >
+      Click image to open expanded view
+    </div>
+    <ul
+      class="imageRow"
+    >
+      <li
+        class="selected"
+        data-index="0"
+      >
+        <img
+          src="1"
+        />
+      </li>
+      <li
+        class=""
+        data-index="1"
+      >
+        <img
+          src="2"
+        />
+      </li>
+      <li
+        class=""
+        data-index="2"
+      >
+        <img
+          src="3"
+        />
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`renders correctly 1`] = `
+<div
+  className="imageBlock"
+>
+  <img
+    onClick={[MockFunction]}
+    src={1}
+  />
+  <div
+    className="imageCaption"
+  >
+    Click image to open expanded view
+  </div>
+  <ul
+    className="imageRow"
+  >
+    <li
+      className="selected"
+      data-index={0}
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <img
+        src={1}
+      />
+    </li>
+    <li
+      className=""
+      data-index={1}
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <img
+        src={2}
+      />
+    </li>
+    <li
+      className=""
+      data-index={2}
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <img
+        src={3}
+      />
+    </li>
+  </ul>
+</div>
+`;
