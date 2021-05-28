@@ -24,8 +24,8 @@ class Popover extends React.Component {
     const popover = this.popover.current;
     let containerHeight = imageContainer.offsetHeight;
     let containerWidth = imageContainer.offsetWidth;
-    let yZoom = image.naturalHeight > containerHeight;
-    let xZoom = image.naturalWidth > containerWidth;
+    let yZoom = this.props.test ?? image.naturalHeight > containerHeight;
+    let xZoom = this.props.test ?? image.naturalWidth > containerWidth;
     imageContainer.classList.toggle('zoomable', xZoom || yZoom);
     if (!imageContainer.classList.contains('zoomed')) {
       return;
@@ -62,9 +62,9 @@ class Popover extends React.Component {
 
     return (
       this.props.visible && <div className="overlay">
-        <div ref={this.popover} className="popoverGallery" onMouseMove={(e) => this.moveHandler(e)}>
+        <div ref={this.popover} className="popoverGallery">
           <button onClick={this.props.closeHandler} className="popoverClose">×</button>
-          <div ref={this.imageContainer} className="largeImage" onClick={(e) => {
+          <div ref={this.imageContainer} className="largeImage" onMouseMove={(e) => this.moveHandler(e)} onClick={(e) => {
             let imageContainer = this.imageContainer.current;
             if (imageContainer.classList.contains('zoomable')) {
               imageContainer.classList.toggle('zoomed');

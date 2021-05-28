@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {cleanup, waitFor, fireEvent, render, queryHelpers, buildQueries} from '@testing-library/react';
+import {cleanup, waitFor, waitForElementToBeRemoved, fireEvent, render, queryHelpers, buildQueries, screen} from '@testing-library/react';
 import Popover from './Popover';
 
 afterEach(cleanup);
@@ -29,11 +29,9 @@ it('is invisible when passed visible=false', () => {
 });
 
 it('changes image when imageList is clicked', () => {
-  const closeHandler = jest.fn();
   const {container} = render(
     <Popover
       images={[1, 2, 3]}
-      closeHandler={closeHandler}
       visible={true}
       name={'test'}
     />
@@ -46,10 +44,7 @@ it('changes image when imageList is clicked', () => {
   expect(image.getAttribute('src')).toBe('2');
 });
 
-/*
-This may need to be in app.jsx...?
-
-it('closes popover when close button is pressed', async () => {
+it('passes close function to closebutton', async () => {
   const closeHandler = jest.fn();
   const {container} = render(
     <Popover
@@ -61,9 +56,45 @@ it('closes popover when close button is pressed', async () => {
   );
   const close = container.querySelector('.popoverClose');
   fireEvent.click(close);
-  await waitFor(() => {
-    const overlay = container.querySelector('.overlay');
-    expect(overlay).not.toBeInTheDocument();
-  });
+  expect(closeHandler).toHaveBeenCalledTimes(1);
 });
-*/
+
+it('doesn\'t crash when user moves mouse over main-image', () => {
+  const {container} = render(
+    <Popover
+      images={[1, 2, 3]}
+      visible={true}
+      name={'test'}
+    />
+  );
+  const image = container.querySelector('.largeImage img');
+  fireEvent.mouseMove(image);
+});
+
+it('toggles image zoom / pan', () => {
+  const {container, rerender} = render(
+    <Popover
+      images={[1, 2, 3]}
+      visible={true}
+      name={'test'}
+    />
+  );
+  let image = container.querySelector('.largeImage');
+  //test clicking when image is 'non-zoomable'
+  expect(image.classList).not.toContain('zoomable');
+  fireEvent.click(image);
+  //setup for test
+  rerender(<Popover
+    images={[1, 2, 3]}
+    visible={true}
+    name={'test'}
+    test={true}
+  />);
+  fireEvent.mouseMove(image);
+  expect(image.classList).toContain('zoomable');
+  expect(image.classList).not.toContain('zoomed');
+  fireEvent.click(image);
+  expect(image.classList).toContain('zoomed');
+  fireEvent.click(image);
+  expect(image.classList).not.toContain('zoomed');
+});

@@ -6,7 +6,6 @@ exports[`renders correctly 1`] = `
 >
   <div
     className="popoverGallery"
-    onMouseMove={[Function]}
   >
     <button
       className="popoverClose"
@@ -16,6 +15,7 @@ exports[`renders correctly 1`] = `
     <div
       className="largeImage"
       onClick={[Function]}
+      onMouseMove={[Function]}
     >
       <img
         src={1}
