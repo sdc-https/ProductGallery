@@ -9,6 +9,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
 
 const sendIndex = (req, res) => {
+  res.cookie('galleryip', req.hostname);
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 };
 

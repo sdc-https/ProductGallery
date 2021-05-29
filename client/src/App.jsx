@@ -3,6 +3,23 @@ import React from 'react';
 import Gallery from './components/Gallery.jsx';
 import Popover from './components/Popover.jsx';
 import axios from 'axios';
+
+const getCookie = function(cname) {
+  var name = cname + '=';
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return 'localhost';
+};
+
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -13,14 +30,15 @@ class App extends React.Component {
       overlayIsVisible: false,
       productName: ''
     };
+    this.galleryip = getCookie('galleryip');
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3003/images/' + this.state.productId)
+    axios.get(`http://${this.galleryip}:3003/images/` + this.state.productId)
       .then(res => this.setState(res.data))
       .catch(console.error);
 
-    axios.get('http://localhost:3002/overview/' + this.state.productId)
+    axios.get(`http://${this.galleryip}:3002/overview/` + this.state.productId)
       .then(res => this.setState({productName: res.data.product_name}))
       .catch(console.error);
   }
