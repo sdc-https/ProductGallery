@@ -16,7 +16,7 @@ class App extends React.Component {
       productName: ''
     };
     this.galleryip = env.GALLERY_IP;
-    this.overviewip = env.GALLERY_IP;
+    this.overviewip = env.OVERVIEW_IP;
   }
 
   componentDidMount() {
