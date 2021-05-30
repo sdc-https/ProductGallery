@@ -3,26 +3,11 @@ import React from 'react';
 import Gallery from './components/Gallery.jsx';
 import Popover from './components/Popover.jsx';
 import axios from 'axios';
-
-const getCookie = function(cname) {
-  var name = cname + '=';
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return 'localhost';
-};
-
 class App extends React.Component {
   constructor (props) {
     super(props);
+    console.log(env);
+    //console.log(process.env);
     let productId = window.location.pathname.split('/').pop() || 1;
     this.state = {
       productId,
@@ -30,7 +15,7 @@ class App extends React.Component {
       overlayIsVisible: false,
       productName: ''
     };
-    this.galleryip = getCookie('galleryip');
+    this.galleryip = env.GALLERY_IP;
   }
 
   componentDidMount() {
