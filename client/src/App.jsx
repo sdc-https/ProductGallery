@@ -16,6 +16,7 @@ class App extends React.Component {
       productName: ''
     };
     this.galleryip = env.GALLERY_IP;
+    this.overviewip = env.GALLERY_IP;
   }
 
   componentDidMount() {
@@ -23,7 +24,7 @@ class App extends React.Component {
       .then(res => this.setState(res.data))
       .catch(console.error);
 
-    axios.get(`http://${this.galleryip}:3002/overview/` + this.state.productId)
+    axios.get(`http://${this.overviewip}:3002/overview/` + this.state.productId)
       .then(res => this.setState({productName: res.data.product_name}))
       .catch(console.error);
   }
