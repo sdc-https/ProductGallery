@@ -15,8 +15,8 @@ class App extends React.Component {
       overlayIsVisible: false,
       productName: ''
     };
-    this.galleryip = env.GALLERY_IP;
-    this.overviewip = env.OVERVIEW_IP;
+    this.galleryip = env.GALLERY_IP || localhost;
+    this.overviewip = env.OVERVIEW_IP || localhost;
   }
 
   componentDidMount() {
