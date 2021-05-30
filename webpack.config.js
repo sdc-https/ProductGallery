@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv').config();
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
+
 
 const config = {
   entry: './client/src/index.js',
@@ -32,7 +35,11 @@ const config = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './client/src/index.html'})
+    new HtmlWebpackPlugin({template: './client/src/index.html'}),
+    new webpack.DefinePlugin({
+      'env': JSON.stringify(dotenv.parsed)
+    }),
+    /*new Dotenv()*/
   ]
 };
 
