@@ -6,8 +6,6 @@ import axios from 'axios';
 class App extends React.Component {
   constructor (props) {
     super(props);
-    console.log(env);
-    //console.log(process.env);
     let productId = window.location.pathname.split('/').pop() || 1;
     this.state = {
       productId,
