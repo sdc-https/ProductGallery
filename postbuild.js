@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config({path: '.env.aws'});
 const fs = require('fs');
 
 const s3 = new AWS.S3({
