@@ -1,6 +1,5 @@
-if (process.env.NODE_ENV === 'production') {
-  const AWS = require('aws-sdk');
-const dotenv = require('dotenv').config({ path: '.env.aws' });
+const AWS = require('aws-sdk');
+const dotenv = require('dotenv').config();
 const fs = require('fs');
 
 const s3 = new AWS.S3({
@@ -23,6 +22,3 @@ s3.upload(params, (err, data) => {
     console.log(`Bundle uploaded to S3 at URL ${data.Location}`);
   }
 });
-} else {
-  console.log('Skipping upload, in development')
-}
