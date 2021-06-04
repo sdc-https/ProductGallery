@@ -3,9 +3,12 @@ import React from 'react';
 import Gallery from './components/Gallery.jsx';
 import Popover from './components/Popover.jsx';
 import axios from 'axios';
+const dotenv = require('dotenv');
 class App extends React.Component {
   constructor (props) {
     super(props);
+    console.log('product gallery env', env);
+    console.log('dotenv', dotenv.parsed);
     let productId = window.location.pathname.split('/').pop() || 1;
     this.state = {
       productId,
