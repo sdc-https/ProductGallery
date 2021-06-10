@@ -34,7 +34,10 @@ const config = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './client/src/index.html'}),
+    new HtmlWebpackPlugin({
+      template: './client/src/index.html',
+      inject: false
+    }),
     new webpack.DefinePlugin({
       'env': JSON.stringify(dotenv.parsed)
     }),
