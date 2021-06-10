@@ -7,12 +7,19 @@ const generateImages = (size = 0, id = 0) => {
   const url = 'https://loremflickr.com/';
   const sizes = [768, 1280, 900];
   const tags = ['tech', 'animals', 'arch', 'people', 'nature'];
-  const images = [];
+  const images = {
+    thumbnails: [],
+    main: [],
+    original: []
+  };
   for (let i = 0; i < size; i++) {
     const width = sizes[Math.round(Math.random() * (sizes.length - 1))];
     const height = sizes[Math.round(Math.random() * (sizes.length - 1))];
     const tagIndex = Math.round(Math.random() * (tags.length - 1));
-    images.push(url + width + '/' + height + '/' + tags[tagIndex] + '?lock=' + id);
+    images['original'].push(url + width + '/' + height + '/' + tags[tagIndex] + '?lock=' + id);
+    images['main'].push(url + (width / 2) + '/' + (height / 2) + '/' + tags[tagIndex] + '?lock=' + id);
+    const scale = width / 80;
+    images['thumbnails'].push(url + 80 + '/' + Math.floor(height / scale) + '/' + tags[tagIndex] + '?lock=' + id);
     tags.splice(tagIndex, 1);
   }
   return images;

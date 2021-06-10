@@ -1,7 +1,11 @@
 module.exports = function(mongoose) {
   let productImageSchema = new mongoose.Schema({
     productId: {type: String, required: true, unique: true},
-    images: [String]
+    images: {
+      thumbnails: [String],
+      main: [String],
+      original: [String]
+    }
   });
 
   let models = {

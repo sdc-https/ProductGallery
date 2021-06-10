@@ -9,7 +9,11 @@ class App extends React.Component {
     let productId = window.location.pathname.split('/').pop() || 1;
     this.state = {
       productId,
-      images: [],
+      images: {
+        thumbnails: [],
+        main: [],
+        original: []
+      },
       overlayIsVisible: false,
       productName: ''
     };
@@ -17,9 +21,24 @@ class App extends React.Component {
     this.overviewip = env.OVERVIEW_IP || localhost;
   }
 
+  preloadImages(images) {
+    const makeLink = function(url) {
+      const link = document.createElement('link');
+      link.href = url;
+      link.rel = 'preload';
+      link.as = 'image';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    };
+    images.main.forEach(makeLink);
+    images.original.forEach(makeLink);
+  }
+
   componentDidMount() {
     axios.get(`http://${this.galleryip}:3003/images/` + this.state.productId)
-      .then(res => this.setState(res.data))
+      .then(res => {
+        this.setState(res.data);
+        this.preloadImages(res.data.images);
+      })
       .catch(err => {
         if (err.response) {
           console.error(err.response);
@@ -38,6 +57,8 @@ class App extends React.Component {
         }
       });
   }
+
+
 
   render() {
     return (

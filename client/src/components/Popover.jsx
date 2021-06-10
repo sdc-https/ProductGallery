@@ -52,12 +52,12 @@ class Popover extends React.Component {
   render() {
     const imageRows = [];
 
-    for (let i = 0; i < this.props.images.length; i++) {
+    for (let i = 0; i < this.props.images.thumbnails.length; i++) {
       const index = Math.floor(i / 4);
       if (!Array.isArray(imageRows[index])) {
         imageRows[index] = [];
       }
-      imageRows[index].push(this.props.images[i]);
+      imageRows[index].push(this.props.images.thumbnails[i]);
     }
 
     return (
@@ -74,7 +74,7 @@ class Popover extends React.Component {
               this.moveHandler(e);
             }
           }}>
-            <img ref={this.image} src={this.props.images[this.state.selected]} />
+            <img ref={this.image} src={this.props.images.original[this.state.selected]} />
           </div>
           <div className="imageColumn">
             <div className="imageColumnTitle">{this.props.name}</div>
