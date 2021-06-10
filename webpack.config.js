@@ -38,10 +38,7 @@ const config = {
     new webpack.DefinePlugin({
       'env': JSON.stringify(dotenv.parsed)
     }),
-    new CompressionPlugin({
-      deleteOriginalAssets: true,
-      filename: '[path][base]',
-    })
+    new CompressionPlugin()
   ]
 };
 

@@ -7,12 +7,14 @@ const s3 = new AWS.S3({
   secretAccessKey: dotenv.parsed.AWS_SECRET
 });
 
-const bundle = fs.readFileSync('./client/dist/gallery.js');
+const bundle = fs.readFileSync('./client/dist/gallery.js.gz');
 
 const params = {
   Bucket: dotenv.parsed.AWS_BUCKET,
   Key: 'gallery.js',
-  Body: bundle
+  Body: bundle,
+  ContentType: 'text/javascript',
+  ContentEncoding: 'gzip',
 };
 
 s3.upload(params, (err, data) => {
