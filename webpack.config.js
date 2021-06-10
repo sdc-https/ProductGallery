@@ -1,8 +1,8 @@
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv').config();
 const path = require('path');
-
 
 const config = {
   entry: './client/src/index.js',
@@ -38,7 +38,10 @@ const config = {
     new webpack.DefinePlugin({
       'env': JSON.stringify(dotenv.parsed)
     }),
-    /*new Dotenv()*/
+    new CompressionPlugin({
+      deleteOriginalAssets: true,
+      filename: '[path][base]',
+    })
   ]
 };
 
