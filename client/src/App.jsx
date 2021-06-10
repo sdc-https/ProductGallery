@@ -19,6 +19,7 @@ class App extends React.Component {
     };
     this.galleryip = env.GALLERY_IP || localhost;
     this.overviewip = env.OVERVIEW_IP || localhost;
+    this.preloadedOriginal = false;
   }
 
   preloadImages(images) {
@@ -29,15 +30,16 @@ class App extends React.Component {
       link.as = 'image';
       document.getElementsByTagName('head')[0].appendChild(link);
     };
-    images.main.forEach(makeLink);
-    images.original.forEach(makeLink);
+    images.forEach(makeLink);
   }
 
   componentDidMount() {
     axios.get(`http://${this.galleryip}:3003/images/` + this.state.productId)
       .then(res => {
         this.setState(res.data);
-        this.preloadImages(res.data.images);
+        this.preloadImages(res.data.images.main);
+        this.preloadImages(res.data.images.thumbnails);
+        this.preloadImages([res.data.images.original[0]]);
       })
       .catch(err => {
         if (err.response) {
@@ -63,7 +65,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Gallery images={this.state.images} openHandler = {() => this.setState({overlayIsVisible: true})} />
+        <Gallery images={this.state.images} openHandler = {() => {
+          if (this.preloadedOriginal === false) {
+            this.preloadImages(this.state.images.original.slice(1));
+          }
+          this.setState({overlayIsVisible: true});
+        }} />
         <Popover images={this.state.images} closeHandler = {() => this.setState({overlayIsVisible: false})} visible={this.state.overlayIsVisible} name={this.state.productName}></Popover>
       </>
 
