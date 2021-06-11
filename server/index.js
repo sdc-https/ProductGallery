@@ -6,7 +6,7 @@ const db = require('../database/index.js');
 const path = require('path');
 const port = 3003;
 
-app.use(compression());
+app.use(compression({threshold: 0}));
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
 
