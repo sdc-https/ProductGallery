@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+const compression = require('compression');
 const cors = require('cors');
 const db = require('../database/index.js');
 const path = require('path');
 const port = 3003;
 
+app.use(compression());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
 

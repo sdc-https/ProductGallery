@@ -15,6 +15,7 @@ const params = {
   Body: bundle,
   ContentType: 'text/javascript',
   ContentEncoding: 'gzip',
+  CacheControl: 'max-age=31536000'
 };
 
 s3.upload(params, (err, data) => {
