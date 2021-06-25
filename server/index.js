@@ -17,8 +17,11 @@ app.get('*/dp/:productId', sendIndex);
 
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
+  console.log('get received:', productId);
+
   db.models.ProductImages.findOne({productId}, (err, product) => {
     if (product !== null) {
+      console.log('product log:', product);
       res.json(product);
     } else {
       res
