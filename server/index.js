@@ -48,31 +48,31 @@ app.post('/images', async (req, res) => {
   console.log('POST received:', document);
   console.log('db count:', count);
 
-  db.models.ProductImages.create(document, (err) => {
+  db.models.ProductImages.create(document, (err, product) => {
     if (err) {
       console.error(err);
     } else {
-      console.log('POST success, doc saved')
-      res.end();
+      console.log('POST success, doc saved:', product)
+      res.status(201).json(product);
     }
   });
 })
 
 app.put('/images/:productId', (req, res) => {
   const productId = req.params.productId;
-  console.log('body:', req.body);
   const update = {
-    productId: productId,
     images: req.body.images
   }
   console.log('PUT received:', update);
-  db.models.ProductImages.findOneAndUpdate({productId}, update, {upsert: true, new: true}, (err, product) => {
+  db.models.ProductImages.findOneAndUpdate({productId}, update, {
+    upsert: true, new: true, overwrite: false
+  }, (err, product) => {
     if (err) {
       console.error(err);
-      res.status(404);
+      res.status(404).send(err);
     } else {
       console.log('PUT successful:', product)
-      res.status(201).end();
+      res.status(201).json(product);
     }
   });
 })
@@ -82,7 +82,8 @@ app.delete('/images/:productId', (req, res) => {
   console.log('DELETE received:', productId);
   db.models.ProductImages.deleteOne({productId}, (err) => {
     if (err) {
-      res.status(404);
+      console.error(err);
+      res.status(404).send();
     } else {
       res.send('Resource deleted.');
     }
