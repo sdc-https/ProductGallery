@@ -42,3 +42,10 @@ From within the root directory:
 ```sh
 npm run db-seed
 ```
+
+## API Endpoints
+
+- **POST** `/images`
+- **GET** `/images/${productId}`
+- **PUT** `/images/${productId}`
+- **DELETE** `/images/${productId}`
