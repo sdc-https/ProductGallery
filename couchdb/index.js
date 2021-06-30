@@ -1,34 +1,32 @@
 const axios = require('axios');
-const countUrl = 'http://admin:tanner3@localhost:5984/testdb';
-const url = 'http://admin:tanner3@localhost:5984/testdb/_bulk_docs';
+const config = require('../config.js');
 
-const config = {
-  'Content-Type': 'application/json'
-}
+const countUrl = `http://admin:${config.pwd}@localhost:5984/images`;
+const url = `http://admin:${config.pwd}@localhost:5984/images/_bulk_docs`;
 
 // generate records
-const generateData = async () => {
-  let idCount = 0
-  for (let i = 0; i < 10; i++) {
-    const recordsArr = [];
-    for (let k = 0; k < 100; k++) {
-      idCount++;
-      const record = {
-          productId: idCount,
-          images: ['test data', 'hey fren']
-      }
-      recordsArr.push(record);
-    }
-    // bulk write 100 records to db
-    await axios.post(url, {
-      docs: recordsArr
-    })
-  }
-}
+// const generateData = async () => {
+//   let idCount = 0
+//   for (let i = 0; i < 1000; i++) {
+//     const recordsArr = [];
+//     for (let k = 0; k < 10000; k++) {
+//       idCount++;
+//       const record = {
+//           productId: idCount,
+//           images: ['test data', 'hey fren']
+//       }
+//       recordsArr.push(record);
+//     }
+//     // bulk write 100 records to db
+//     await axios.post(url, {
+//       docs: recordsArr
+//     })
+//   }
+// }
 // generateData();
 
 // count documents
-// axios.get(countUrl)
-//   .then((res) => {
-//     console.log('doc count:', res.data.doc_count);
-//   })
+axios.get(countUrl)
+  .then((res) => {
+    console.log('doc count:', res.data.doc_count);
+  })
