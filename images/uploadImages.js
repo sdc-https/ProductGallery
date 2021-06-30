@@ -18,7 +18,7 @@ const uploadImages = (folderPath) => {
     console.log('called!')
     for (let file of files) {
       const filePath = path.join(dirPath, file);
-      console.log(filePath);
+      // console.log(filePath);
       fs.readFile(filePath, (error, content) => {
         if (error) {
           console.error(error);
@@ -28,7 +28,7 @@ const uploadImages = (folderPath) => {
           Key: file,
           Body: content
         }, (res) => {
-          // console.log('successfully uploaded file');
+          console.log('successfully uploaded file');
         })
       })
     }
