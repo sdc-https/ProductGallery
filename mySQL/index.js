@@ -2,7 +2,8 @@ const { Sequelize } = require('sequelize');
 const databaseName = 'images';
 const sequelize = new Sequelize('productImages', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
+  logging: false
 });
 
 const verifyConnection = async () => {
@@ -16,27 +17,60 @@ const verifyConnection = async () => {
 verifyConnection();
 
 const Image = sequelize.define('Image', {
+  product_id: Sequelize.INTEGER,
   image_url: Sequelize.STRING,
   tag_id: Sequelize.INTEGER
 })
 
 const Tag = sequelize.define('Tag', {
-  tag: Sequelize.STRING
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  tag_body: Sequelize.STRING
 })
+
+// Image.sync({force: true});
+// Tag.sync({force: true});
 
 const images = {
   bulkWrite: async (records) => {
-    await bulkCreate(records);
+    await Image.bulkCreate(records)
+      .catch((err) => {
+        console.error(err);
+      })
   },
   writeOne: async (record) => {
-    await create(record);
+    await Image.create(record);
   },
   deleteOne: async(id) => {
-    await destroy({where: {image_id: id}})
+    await Image.destroy({where: {image_id: id}})
   },
   updateOne: async(id, update) => {
-    await update(update, {where: {image_id: id}})
+    await Image.update(update, {where: {image_id: id}})
   }
 }
 
-console.log(User === sequelize.models.User); // true
+const tags = {
+  bulkWrite: async (records) => {
+    await Tag.bulkCreate(records)
+      .catch((err) => {
+        console.error(err);
+      })
+  },
+  writeOne: async (record) => {
+    await Tag.create(record)
+      .catch((err) => {
+        console.error(err);
+      })
+  },
+  deleteOne: async(id) => {
+    await Tag.destroy({where: {id: id}})
+  },
+  updateOne: async(id, update) => {
+    await Tag.update(update, {where: {id: id}})
+  }
+}
+
+module.exports.images = images;
+module.exports.tags = tags;
