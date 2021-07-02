@@ -1,8 +1,7 @@
 const axios = require('axios');
 const config = require('../config.js');
-
-const countUrl = `http://admin:${config.pwd}@localhost:5984/images`;
-const url = `http://admin:${config.pwd}@localhost:5984/images/_bulk_docs`;
+const countUrl = `http://${config.username}:${config.pwd}@localhost:5984/${config.database}`;
+const postUrl = `http://${config.username}:${config.pwd}@localhost:5984/${config.database}/_bulk_docs`;
 
 // generate records
 const generateData = async () => {
@@ -17,7 +16,7 @@ const generateData = async () => {
       }
       recordsArr.push(record);
     }
-    await axios.post(url, {
+    await axios.post(postUrl, {
       docs: recordsArr
     })
   }
@@ -25,7 +24,7 @@ const generateData = async () => {
 generateData();
 
 // count documents
-axios.get(countUrl)
-  .then((res) => {
-    console.log('doc count:', res.data.doc_count);
-  })
+// axios.get(countUrl)
+//   .then((res) => {
+//     console.log('doc count:', res.data.doc_count);
+//   })
