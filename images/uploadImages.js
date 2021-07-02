@@ -3,6 +3,7 @@ const config = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const dirPath = path.join(__dirname, '/repository');
+const keyPrefix = 'sdc-image-';
 
 const s3 = new AWS.S3({
   accessKeyId: config.bucket_id,
@@ -10,6 +11,7 @@ const s3 = new AWS.S3({
 });
 
 const uploadImages = (folderPath) => {
+  let imageId = 869;
   // Read content from the directory
   fs.readdir(folderPath, (err, files) => {
     if (err) {
@@ -17,7 +19,7 @@ const uploadImages = (folderPath) => {
     }
     console.log('called!')
     for (let file of files) {
-      const filePath = path.join(dirPath, file);
+      const filePath = path.join(folderPath, file);
       // console.log(filePath);
       fs.readFile(filePath, (error, content) => {
         if (error) {
@@ -25,8 +27,9 @@ const uploadImages = (folderPath) => {
         }
         s3.putObject({
           Bucket: config.bucket_name,
-          Key: file,
-          Body: content
+          Key: keyPrefix + imageId++ + '.jpg',
+          Body: content,
+          ContentType: 'image/jpeg'
         }, (res) => {
           console.log('successfully uploaded file');
         })

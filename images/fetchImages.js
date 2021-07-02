@@ -31,5 +31,5 @@ const fetchImages = async (n) => {
         })
   }
 }
-fetchImages(900);
+fetchImages(200);
 
