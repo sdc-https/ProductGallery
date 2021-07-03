@@ -1,17 +1,14 @@
 const axios = require('axios');
-const countUrl = 'http://admin:tanner3@localhost:5984/testdb';
-const url = 'http://admin:tanner3@localhost:5984/testdb/_bulk_docs';
-
-const config = {
-  'Content-Type': 'application/json'
-}
+const config = require('../config.js');
+const countUrl = `http://${config.username}:${config.pwd}@localhost:5984/${config.database}`;
+const postUrl = `http://${config.username}:${config.pwd}@localhost:5984/${config.database}/_bulk_docs`;
 
 // generate records
 const generateData = async () => {
   let idCount = 0
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1000; i++) {
     const recordsArr = [];
-    for (let k = 0; k < 100; k++) {
+    for (let k = 0; k < 10000; k++) {
       idCount++;
       const record = {
           productId: idCount,
@@ -19,13 +16,12 @@ const generateData = async () => {
       }
       recordsArr.push(record);
     }
-    // bulk write 100 records to db
-    await axios.post(url, {
+    await axios.post(postUrl, {
       docs: recordsArr
     })
   }
 }
-// generateData();
+generateData();
 
 // count documents
 // axios.get(countUrl)
