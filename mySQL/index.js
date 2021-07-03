@@ -3,7 +3,10 @@ const databaseName = 'images';
 const sequelize = new Sequelize('productImages', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
-  logging: false
+  logging: false,
+  define: {
+    timestamps: false
+  }
 });
 
 const verifyConnection = async () => {
@@ -20,6 +23,8 @@ const Image = sequelize.define('image', {
   product_id: Sequelize.INTEGER,
   image_url: Sequelize.STRING,
   tag_id: Sequelize.INTEGER
+}, {
+  tableName: 'images'
 })
 
 const Tag = sequelize.define('tag', {
@@ -28,6 +33,8 @@ const Tag = sequelize.define('tag', {
     primaryKey: true
   },
   tag_body: Sequelize.STRING
+}, {
+  tableName: 'tags'
 })
 
 // Image.sync({force: true});
