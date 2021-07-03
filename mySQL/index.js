@@ -16,13 +16,13 @@ const verifyConnection = async () => {
 }
 verifyConnection();
 
-const Image = sequelize.define('Image', {
+const Image = sequelize.define('image', {
   product_id: Sequelize.INTEGER,
   image_url: Sequelize.STRING,
   tag_id: Sequelize.INTEGER
 })
 
-const Tag = sequelize.define('Tag', {
+const Tag = sequelize.define('tag', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true
