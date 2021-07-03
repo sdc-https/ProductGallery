@@ -11,12 +11,11 @@ const generateData = async () => {
     const recordsArr = [];
     for (let k = 0; k < 100; k++) {
       idCount++;
-      // const imageCount = Math.floor( Math.random() * )
+      const imageCount = await Math.floor( Math.random() * (7 - 4 + 1) + 4 );
       const record = {
         _id: idCount.toString(),
         images: []
       }
-      const imageCount = 3;
       for (let j = 0; j < imageCount; j++) {
         const imageId = Math.floor( (Math.random() * 1000) + 1 );
         const image = `https://sdc-http-images.s3.amazonaws.com/sdc-image-${imageId}.jpg`;
