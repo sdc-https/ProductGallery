@@ -9,8 +9,8 @@ const generateData = async (outer, inner) => {
     const imagesArr = [];
     for (let k = 0; k < inner; k++) {
       idCount++;
-      // const imageCount = await Math.floor( Math.random() * (7 - 4 + 1) + 4 );
-      const imageCount = 3;
+      const imageCount = await Math.floor( Math.random() * (7 - 4 + 1) + 4 );
+      // const imageCount = 3;
       for (let i = 0; i < imageCount; i++) {
         const imageId = Math.floor( (Math.random() * 1000) + 1 );
         const tagId = Math.floor( (Math.random() * 5) + 1 );
