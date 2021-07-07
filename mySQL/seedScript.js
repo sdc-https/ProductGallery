@@ -2,7 +2,6 @@ const mysqlDB = require('./index.js');
 const faker = require('faker');
 
 const generateData = async (outer, inner) => {
-  console.time('benchmark');
   let idCount = 0;
   let tagCount = 0;
   for (let i = 0; i < outer; i++) {
@@ -33,6 +32,5 @@ const generateData = async (outer, inner) => {
     //save to db
     await mysqlDB.images.bulkWrite(imagesArr);
   }
-  console.timeEnd()
 }
 generateData(1000, 10000);
