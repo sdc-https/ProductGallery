@@ -24,7 +24,8 @@ const Image = sequelize.define('image', {
   image_url: Sequelize.STRING,
   tag_id: Sequelize.INTEGER
 }, {
-  tableName: 'images'
+  tableName: 'images',
+  logging: false
 })
 
 const Tag = sequelize.define('tag', {
@@ -34,7 +35,8 @@ const Tag = sequelize.define('tag', {
   },
   tag_body: Sequelize.STRING
 }, {
-  tableName: 'tags'
+  tableName: 'tags',
+  logging: false
 })
 
 // Image.sync({force: true});
