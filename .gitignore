@@ -27,4 +27,4 @@ images/repository/
 
 #environment variables
 *.env*
-config.js
+/Users/owner/sdc/ProductGallery/config.js
