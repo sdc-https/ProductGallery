@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const db = require('../database/index.js');
+const db = require('../mySQL/index.js');
 const path = require('path');
 const port = 3003;
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
@@ -17,27 +17,36 @@ const sendIndex = (req, res) => {
 app.get('/:dp', sendIndex);
 app.get('*/dp/:productId', sendIndex);
 
+// CRUD API
+
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
   console.log('GET received:', productId);
 
-  db.models.ProductImages.findOne({productId}, (err, product) => {
-    if (product !== null) {
-      console.log('product log:', product);
-      res.json(product);
-    } else {
-      res
-        .status(404)
-        .json({
-          productId,
-          images: [],
-        });
-    }
-  });
-  //res.json({productId});
-});
+  return db.images.getImages(productId)
+    .then((productImages) => {
+      if (productImages !== null) {
+        // console.log('images:', productImages);
+        const urls = productImages.map( (image) => image.image_url);
+        console.log('plain images:', urls);
 
-// CRUD API
+        res.json({
+          productId,
+          images: urls
+        });
+      } else {
+        throw 'No such product!';
+      }
+    })
+    .catch((err) => {
+      res
+      .status(404)
+      .json({
+        productId,
+        images: [],
+      });
+    })
+  })
 
 app.post('/images', async (req, res) => {
   let count = await db.models.ProductImages.estimatedDocumentCount();

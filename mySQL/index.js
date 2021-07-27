@@ -52,6 +52,11 @@ const images = {
   writeOne: async (record) => {
     await Image.create(record);
   },
+  getImages: async(id) => {
+    return await Image.findAll({
+      where: {product_id: id}, raw: true, attributes: ['image_url']
+    })
+  },
   deleteOne: async(id) => {
     await Image.destroy({where: {image_id: id}})
   },
