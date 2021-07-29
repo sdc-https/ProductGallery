@@ -1,3 +1,4 @@
+const newrelic = require('newrelic')
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -22,11 +23,14 @@ app.get('*/dp/:productId', sendIndex);
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
   console.log('GET received:', productId);
+  // db.Images.sync({force: true});
 
-  return db.images.getImages(productId)
+  return db.models.Images.findAll({
+    where: {product_id: productId}, raw: true, attributes: ['image_url']
+  })
     .then((productImages) => {
       if (productImages !== null) {
-        // console.log('images:', productImages);
+        console.log('images:', productImages);
         const urls = productImages.map( (image) => image.image_url);
         console.log('plain images:', urls);
 
@@ -48,23 +52,25 @@ app.get('/images/:productId', (req, res) => {
     })
   })
 
-app.post('/images', async (req, res) => {
-  let count = await db.models.ProductImages.estimatedDocumentCount();
-  const document = {
-    productId: count + 1,
-    images: req.body.images
+app.post('/images/:productId', async (req, res) => {
+  const productId = req.params.productId;
+  const imageURL = req.body.url;
+  const tagId = Math.floor( (Math.random() * 5) + 1 );
+  const imageRecord = {
+    product_id: productId,
+    image_url: req.body.url,
+    tagId
   }
-  console.log('POST received:', document);
-  console.log('db count:', count);
+  console.log('POST received:', productId);
 
-  db.models.ProductImages.create(document, (err, product) => {
-    if (err) {
-      console.error(err);
-    } else {
+  db.models.Images.create(imageRecord)
+    .then((product) => {
       console.log('POST success, doc saved:', product)
       res.status(201).json(product);
-    }
-  });
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 })
 
 app.put('/images/:productId', (req, res) => {
@@ -73,6 +79,7 @@ app.put('/images/:productId', (req, res) => {
     images: req.body.images
   }
   console.log('PUT received:', update);
+
   db.models.ProductImages.findOneAndUpdate({productId}, update, {
     upsert: true, new: true, overwrite: false
   }, (err, product) => {

@@ -1,4 +1,4 @@
-const mysqlDB = require('./index.js');
+const db = require('./index.js');
 const faker = require('faker');
 
 const generateData = async (outer, inner) => {
@@ -12,7 +12,6 @@ const generateData = async (outer, inner) => {
     for (let k = 0; k < inner; k++) {
       idCount++;
       const imageCount = Math.floor( Math.random() * (7 - 4 + 1) + 4 );
-      // const imageCount = 3;
       for (let i = 0; i < imageCount; i++) {
         imageId++;
         if (imageId > 1000) {
@@ -31,12 +30,12 @@ const generateData = async (outer, inner) => {
           id: idCount,
           tag_body: faker.commerce.department()
         }
-        mysqlDB.tags.writeOne(tag);
+        db.models.Tags.create(tag);
       }
       tagCount++;
     }
     //save to db
-    await mysqlDB.images.bulkWrite(imagesArr);
+    await db.models.Images.bulkCreate(imagesArr);
   }
   console.timeEnd('seed-timer');
 }
