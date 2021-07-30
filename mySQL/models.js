@@ -9,7 +9,8 @@ module.exports = function(sequelize) {
       tag_id: Sequelize.INTEGER
     }, {
       tableName: 'images',
-      logging: false
+      logging: false,
+
     }),
     Tags: sequelize.define('tag', {
       id: {
