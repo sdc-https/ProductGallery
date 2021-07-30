@@ -30,9 +30,9 @@ app.get('/images/:productId', (req, res) => {
   })
     .then((productImages) => {
       if (productImages !== null) {
-        console.log('images:', productImages);
+        // console.log('images:', productImages);
         const urls = productImages.map( (image) => image.image_url);
-        console.log('plain images:', urls);
+        // console.log('plain images:', urls);
 
         res.json({
           productId,
@@ -55,17 +55,18 @@ app.get('/images/:productId', (req, res) => {
 app.post('/images/:productId', async (req, res) => {
   const productId = req.params.productId;
   const imageURL = req.body.url;
-  const tagId = Math.floor( (Math.random() * 5) + 1 );
+  console.log("image url:", imageURL);
+  const tagId = await Math.floor( (Math.random() * 5) + 1 );
   const imageRecord = {
     product_id: productId,
     image_url: req.body.url,
-    tagId
+    tag_id: tagId
   }
-  console.log('POST received:', productId);
+  // console.log('POST received:', productId);
 
   db.models.Images.create(imageRecord)
     .then((product) => {
-      console.log('POST success, doc saved:', product)
+      // console.log('POST success, doc saved:', product)
       res.status(201).json(product);
     })
     .catch((err) => {
