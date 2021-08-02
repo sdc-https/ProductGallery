@@ -5,6 +5,7 @@ const cors = require('cors');
 const db = require('../mySQL/index.js');
 const path = require('path');
 const port = 3003;
+const morgan = require("morgan");
 const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));

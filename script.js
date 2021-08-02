@@ -15,22 +15,22 @@ export let options = {
 };
 
 // GET
-export default function () {
-  let productId = Math.floor( Math.random() * (10000000 - 9000000 + 1) + 9000000 );
-  http.get(`http://localhost:3003/images/${productId}`, {
-    tags: { name: 'GetItemURL' },
-  });
-}
-
-// // POST
-// export default function() {
+// export default function () {
 //   let productId = Math.floor( Math.random() * (10000000 - 9000000 + 1) + 9000000 );
-//   let imageId = Math.floor( Math.random() * (1000 - 900 + 1) + 900 );
-//   http.post(`http://localhost:3003/images/${productId}`, JSON.stringify({
-//     url: `https://sdc-http-images.s3.amazonaws.com/sdc-image-${imageId}.jpg`
-//   }),
-//   {
-//     tags: { name: 'PostItemURL' },
-//     headers: { 'Content-Type': 'application/json' }
+//   http.get(`http://localhost:3003/images/${productId}`, {
+//     tags: { name: 'GetItemURL' },
 //   });
 // }
+
+// POST
+export default function() {
+  let productId = Math.floor( Math.random() * (10000000 - 9000000 + 1) + 9000000 );
+  let imageId = Math.floor( Math.random() * (1000 - 900 + 1) + 900 );
+  http.post(`http://localhost:3003/images/${productId}`, JSON.stringify({
+    url: `https://sdc-http-images.s3.amazonaws.com/sdc-image-${imageId}.jpg`
+  }),
+  {
+    tags: { name: 'PostItemURL' },
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
