@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://${this.galleryip}:3003/images/` + this.state.productId)
+    axios.get(`http://${this.galleryip}:1180/images/` + this.state.productId)
       .then(res => this.setState(res.data))
       .catch(err => {
         if (err.response) {

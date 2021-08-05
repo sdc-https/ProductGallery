@@ -1,10 +1,12 @@
+const newrelic = require('newrelic')
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const db = require('../database/index.js');
+const db = require('../mySQL/index.js');
 const path = require('path');
 const port = 3003;
-const bodyParser = require('body-parser')
+const morgan = require("morgan");
+const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
@@ -17,45 +19,60 @@ const sendIndex = (req, res) => {
 app.get('/:dp', sendIndex);
 app.get('*/dp/:productId', sendIndex);
 
+// CRUD API
+
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
   console.log('GET received:', productId);
+  // db.Images.sync({force: true});
 
-  db.models.ProductImages.findOne({productId}, (err, product) => {
-    if (product !== null) {
-      console.log('product log:', product);
-      res.json(product);
-    } else {
-      res
-        .status(404)
-        .json({
+  return db.models.Images.findAll({
+    where: {product_id: productId}, raw: true, attributes: ['image_url']
+  })
+    .then((productImages) => {
+      if (productImages !== null) {
+        // console.log('images:', productImages);
+        const urls = productImages.map( (image) => image.image_url);
+        // console.log('plain images:', urls);
+
+        res.json({
           productId,
-          images: [],
+          images: urls
         });
-    }
-  });
-  //res.json({productId});
-});
+      } else {
+        throw 'No such product!';
+      }
+    })
+    .catch((err) => {
+      res
+      .status(404)
+      .json({
+        productId,
+        images: [],
+      });
+    })
+  })
 
-// CRUD API
-
-app.post('/images', async (req, res) => {
-  let count = await db.models.ProductImages.estimatedDocumentCount();
-  const document = {
-    productId: count + 1,
-    images: req.body.images
+app.post('/images/:productId', async (req, res) => {
+  const productId = req.params.productId;
+  const imageURL = req.body.url;
+  console.log("image url:", imageURL);
+  const tagId = await Math.floor( (Math.random() * 5) + 1 );
+  const imageRecord = {
+    product_id: productId,
+    image_url: req.body.url,
+    tag_id: tagId
   }
-  console.log('POST received:', document);
-  console.log('db count:', count);
+  // console.log('POST received:', productId);
 
-  db.models.ProductImages.create(document, (err, product) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('POST success, doc saved:', product)
+  db.models.Images.create(imageRecord)
+    .then((product) => {
+      // console.log('POST success, doc saved:', product)
       res.status(201).json(product);
-    }
-  });
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 })
 
 app.put('/images/:productId', (req, res) => {
@@ -64,6 +81,7 @@ app.put('/images/:productId', (req, res) => {
     images: req.body.images
   }
   console.log('PUT received:', update);
+
   db.models.ProductImages.findOneAndUpdate({productId}, update, {
     upsert: true, new: true, overwrite: false
   }, (err, product) => {
