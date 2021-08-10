@@ -1,8 +1,10 @@
-
 import React from 'react';
 import Gallery from './components/Gallery.jsx';
 import Popover from './components/Popover.jsx';
 import axios from 'axios';
+import config from '../../config.js';
+
+
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -13,14 +15,12 @@ class App extends React.Component {
       overlayIsVisible: false,
       productName: ''
     };
-    // this.galleryip = env.GALLERY_IP || localhost;
-    // this.overviewip = env.OVERVIEW_IP || localhost;
-    this.galleryip = 'localhost';
-    this.overviewip = 'localhost';
+    this.proxyip = config.proxyHost || 'localhost';
+    this.overviewip = config.overviewHost ||'localhost';
   }
 
   componentDidMount() {
-    axios.get(`http://${this.galleryip}:1180/images/` + this.state.productId)
+    axios.get(`http://${this.proxyip}/images/` + this.state.productId)
       .then(res => this.setState(res.data))
       .catch(err => {
         if (err.response) {

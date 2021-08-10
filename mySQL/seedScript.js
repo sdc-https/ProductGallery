@@ -1,4 +1,4 @@
-const db = require('./index.js');
+const db = require('../mySQL/index.js');
 const faker = require('faker');
 
 const generateData = async (outer, inner) => {
