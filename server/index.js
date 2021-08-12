@@ -1,4 +1,4 @@
-const newrelic = require('newrelic')
+const newrelic = require('newrelic');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
 const sendIndex = (req, res) => {
@@ -23,18 +24,13 @@ app.get('*/dp/:productId', sendIndex);
 
 app.get('/images/:productId', (req, res) => {
   const productId = req.params.productId;
-  console.log('GET received:', productId);
   // db.Images.sync({force: true});
-
   return db.models.Images.findAll({
     where: {product_id: productId}, raw: true, attributes: ['image_url']
   })
     .then((productImages) => {
       if (productImages !== null) {
-        // console.log('images:', productImages);
         const urls = productImages.map( (image) => image.image_url);
-        // console.log('plain images:', urls);
-
         res.json({
           productId,
           images: urls
@@ -56,7 +52,6 @@ app.get('/images/:productId', (req, res) => {
 app.post('/images/:productId', async (req, res) => {
   const productId = req.params.productId;
   const imageURL = req.body.url;
-  console.log("image url:", imageURL);
   const tagId = await Math.floor( (Math.random() * 5) + 1 );
   const imageRecord = {
     product_id: productId,
@@ -80,7 +75,6 @@ app.put('/images/:productId', (req, res) => {
   const update = {
     images: req.body.images
   }
-  console.log('PUT received:', update);
 
   db.models.ProductImages.findOneAndUpdate({productId}, update, {
     upsert: true, new: true, overwrite: false
@@ -89,7 +83,6 @@ app.put('/images/:productId', (req, res) => {
       console.error(err);
       res.status(404).send(err);
     } else {
-      console.log('PUT successful:', product)
       res.status(201).json(product);
     }
   });
@@ -97,7 +90,6 @@ app.put('/images/:productId', (req, res) => {
 
 app.delete('/images/:productId', (req, res) => {
   const productId = req.params.productId;
-  console.log('DELETE received:', productId);
   db.models.ProductImages.deleteOne({productId}, (err) => {
     if (err) {
       console.error(err);

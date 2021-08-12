@@ -16,7 +16,7 @@ class App extends React.Component {
       productName: ''
     };
     this.proxyip = config.proxyHost || 'localhost';
-    this.overviewip = config.overviewHost ||'localhost';
+    this.overviewip = config.overviewHost;
   }
 
   componentDidMount() {
@@ -30,7 +30,7 @@ class App extends React.Component {
         }
       });
 
-    axios.get(`http://${this.overviewip}:3002/overview/` + this.state.productId)
+    axios.get(`http://${this.overviewip}/overview/` + this.state.productId)
       .then(res => this.setState({productName: res.data.product_name}))
       .catch(err => {
         if (err.response) {
