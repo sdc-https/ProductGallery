@@ -7,11 +7,20 @@ const path = require('path');
 const port = 3003;
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
+const redis = require("redis");
+const redisPort = 6379
+const client = redis.createClient(redisPort);
+const shrinkRay = require('shrink-ray-current');
+
+client.on("error", (err) => {
+    console.log(err);
+});
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(cors());
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 app.use(bodyParser.json());
+app.use(shrinkRay());
 
 const sendIndex = (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
@@ -22,32 +31,44 @@ app.get('*/dp/:productId', sendIndex);
 
 // CRUD API
 
-app.get('/images/:productId', (req, res) => {
+app.get('/images/:productId', async (req, res) => {
   const productId = req.params.productId;
-  // db.Images.sync({force: true});
-  return db.models.Images.findAll({
-    where: {product_id: productId}, raw: true, attributes: ['image_url']
-  })
-    .then((productImages) => {
-      if (productImages !== null) {
-        const urls = productImages.map( (image) => image.image_url);
-        res.json({
-          productId,
-          images: urls
-        });
-      } else {
-        throw 'No such product!';
-      }
-    })
-    .catch((err) => {
-      res
-      .status(404)
+  client.get(productId, async (err, urls) => {
+    if (err) throw err;
+
+    if (urls) {
+      res.status(200)
       .json({
         productId,
-        images: [],
+        images: JSON.parse(urls)
       });
-    })
-  })
+    } else {
+      return db.models.Images.findAll({
+        where: {product_id: productId}, raw: true, attributes: ['image_url']
+      })
+        .then((productImages) => {
+          if (productImages !== null) {
+            const urls = productImages.map( (image) => image.image_url);
+            client.set(productId, JSON.stringify(urls));
+            res.json({
+              productId,
+              images: urls
+            });
+          } else {
+            throw 'No such product!';
+          }
+        })
+        .catch((err) => {
+          res
+          .status(404)
+          .json({
+            productId,
+            images: [],
+          });
+        })
+    }
+  });
+})
 
 app.post('/images/:productId', async (req, res) => {
   const productId = req.params.productId;
@@ -58,11 +79,9 @@ app.post('/images/:productId', async (req, res) => {
     image_url: req.body.url,
     tag_id: tagId
   }
-  // console.log('POST received:', productId);
 
   db.models.Images.create(imageRecord)
     .then((product) => {
-      // console.log('POST success, doc saved:', product)
       res.status(201).json(product);
     })
     .catch((err) => {

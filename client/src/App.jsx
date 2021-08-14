@@ -39,7 +39,6 @@ class App extends React.Component {
           console.error(err.message + ' - overview API could not be reached', err.config);
         }
       });
-      console.log('state log:', this.state)
   }
 
   render() {
